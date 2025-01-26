@@ -27,6 +27,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-include(":composeApp")
-include(":core")
+include(
+    ":composeApp",
+    ":core",
+    ":feature-login"
+)

@@ -1,6 +1,4 @@
-package ru.alexbur.fintess_manager.base
-
-import ru.alexbur.fintess_manager.createNativeLogger
+package ru.alexbur.fintess_manager.core
 
 interface NativeLogger {
     fun w(tag: String, data: String)

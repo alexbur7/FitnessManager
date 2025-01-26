@@ -6,11 +6,10 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.http.headers
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
-import ru.alexbur.fintess_manager.base.AppLogger
+import ru.alexbur.fintess_manager.core.AppLogger
 import ru.alexbur.fintess_manager.di.qualifiers.baseUrl
 
 val apiModule = module {
@@ -45,7 +44,7 @@ private object ApiClient {
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
-                        AppLogger.w("Ktor", message)
+                        ru.alexbur.fintess_manager.core.AppLogger.w("Ktor", message)
                     }
                 }
             }

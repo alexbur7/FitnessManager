@@ -1,4 +1,4 @@
-package ru.alexbur.fintess_manager.base
+package ru.alexbur.fintess_manager.core
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

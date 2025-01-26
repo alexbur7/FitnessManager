@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.alexbur.fintess_manager.base.AppLogger
+import ru.alexbur.fintess_manager.core.AppLogger
 import ru.alexbur.fintess_manager.domain.interactor.RocketsInteractor
 
 class AppViewModel(

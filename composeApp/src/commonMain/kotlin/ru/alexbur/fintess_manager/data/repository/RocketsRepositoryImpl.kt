@@ -1,7 +1,7 @@
 package ru.alexbur.fintess_manager.data.repository
 
 import kotlinx.coroutines.withContext
-import ru.alexbur.fintess_manager.base.DispatcherProvider
+import ru.alexbur.fintess_manager.core.DispatcherProvider
 import ru.alexbur.fintess_manager.data.api.FitnessManagerApi
 import ru.alexbur.fintess_manager.data.mappers.RocketMappers
 import ru.alexbur.fintess_manager.domain.models.Rocket

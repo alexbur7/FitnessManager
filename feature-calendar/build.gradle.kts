@@ -41,6 +41,7 @@ kotlin {
 
             implementation(project(":core"))
             implementation(project(":navigation"))
+            implementation(project(":common-presentation"))
         }
     }
 }

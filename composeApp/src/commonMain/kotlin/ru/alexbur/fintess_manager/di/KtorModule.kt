@@ -44,7 +44,7 @@ private object ApiClient {
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
-                        ru.alexbur.fintess_manager.core.AppLogger.w("Ktor", message)
+                        AppLogger.w("Ktor", message)
                     }
                 }
             }

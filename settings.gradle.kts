@@ -29,8 +29,11 @@ dependencyResolutionManagement {
 }
 include(
     ":composeApp",
+    
     ":core",
     ":navigation",
+    ":common-presentation",
+
     ":feature-login",
     ":feature-calendar",
 )

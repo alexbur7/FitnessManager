@@ -1,0 +1,3 @@
+package ru.alexbur.fintess_manager.common_presentation.mvi
+
+interface ViewState

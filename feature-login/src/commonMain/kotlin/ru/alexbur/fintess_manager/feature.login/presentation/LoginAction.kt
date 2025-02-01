@@ -1,7 +1,8 @@
 package ru.alexbur.fintess_manager.feature.login.presentation
 
 internal sealed class LoginAction {
-    class NumberEntered(val data: String) : LoginAction()
+    class NumberEntered(val phone: String) : LoginAction()
+    class OtpEntered(val otp: String) : LoginAction()
     class GetCodeClicked : LoginAction()
-    class AuthorizationClicked : LoginAction()
+    class LoginClicked : LoginAction()
 }

@@ -35,11 +35,15 @@ internal class LoginViewModel(
         when (action) {
             is LoginAction.GetCodeClicked -> getOtpCode()
             is LoginAction.NumberEntered -> {
-                phone = action.data
-                setupState()
+                phone = action.phone
+                setupEnterPhoneState()
             }
 
-            is LoginAction.AuthorizationClicked -> login()
+            is LoginAction.LoginClicked -> login()
+            is LoginAction.OtpEntered -> {
+                otp = action.otp
+                setupEnterOtpState()
+            }
         }
     }
 
@@ -48,7 +52,8 @@ internal class LoginViewModel(
         viewModelScope.launch {
             interactor.getOtp(phone).onSuccess {
                 userId = it.userId
-                setupLoginState()
+                otp = ""
+                setupEnterOtpState()
             }.onFailure {
                 AppLogger.e("tut_otp", "Error: $it")
             }
@@ -66,11 +71,11 @@ internal class LoginViewModel(
         }
     }
 
-    private fun setupState() {
+    private fun setupEnterPhoneState() {
         _viewState.value = LoginViewState.EnterNumber(isEnableButton = isEnableButton)
     }
 
-    private fun setupLoginState() {
-        _viewState.value = LoginViewState.EnterOtp(isEnableButton = true)
+    private fun setupEnterOtpState() {
+        _viewState.value = LoginViewState.EnterOtp(isEnableButton = otp.length == 6)
     }
 }

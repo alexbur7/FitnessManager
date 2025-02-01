@@ -1,10 +1,12 @@
 package ru.alexbur.fintess_manager.feature.login.presentation.phone
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
@@ -12,17 +14,18 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-internal fun PhoneNumber(
-    numberEntered: (String) -> Unit
-) {
+internal fun PhoneNumber(numberEntered: (String) -> Unit) {
     var phoneNumber = rememberSaveable { mutableStateOf("") }
     val numericRegex = Regex("[^0-9]")
     TextField(
+        modifier = Modifier.fillMaxWidth(),
         value = phoneNumber.value,
         onValueChange = { data: String ->
             val stripped = numericRegex.replace(data, "")
             phoneNumber.value = if (stripped.length >= 11) {
                 stripped.substring(0..10)
+            } else if (stripped.length == 1) {
+                "7"
             } else {
                 stripped
             }

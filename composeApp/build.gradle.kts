@@ -61,6 +61,7 @@ kotlin {
             implementation(libs.navigation.compose)
 
             implementation(project(":core"))
+            implementation(project(":navigation"))
             implementation(project(":feature-login"))
         }
 

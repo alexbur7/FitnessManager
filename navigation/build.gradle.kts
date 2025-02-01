@@ -1,5 +1,4 @@
 import org.gradle.kotlin.dsl.android
-import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -26,27 +25,13 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose.viewmodel)
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.serialization.core)
-            implementation(libs.lifecycle.viewmodel.compose)
-
-            implementation(project(":core"))
-            implementation(project(":navigation"))
+            implementation(libs.navigation.compose)
         }
     }
 }
 
 android {
-    namespace = "ru.alexbur.fintess_manager.feature.login"
+    namespace = "ru.alexbur.fintess_manager.navigation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

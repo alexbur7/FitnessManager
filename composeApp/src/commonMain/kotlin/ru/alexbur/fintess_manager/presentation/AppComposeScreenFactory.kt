@@ -1,17 +1,26 @@
 package ru.alexbur.fintess_manager.presentation
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ru.alexbur.fintess_manager.feature.login.presentation.LoginScreenFactory
+import androidx.navigation.toRoute
+import ru.alexbur.fintess_manager.feature.login.presentation.navigation.LoginRoute
+import ru.alexbur.fintess_manager.feature.login.presentation.navigation.LoginScreenFactory
+import ru.alexbur.fintess_manager.navigation.Navigator
+import ru.alexbur.fintess_manager.navigation.Route
+import ru.alexbur.fintess_manager.navigation.ScreenFactory
 
 class AppComposeScreenFactory(
     private val builder: NavGraphBuilder,
 ) {
 
-    fun create(navController: NavController) {
-        builder.composable("login") { stackEntry ->
-            LoginScreenFactory().create(navController)
+    fun create(navigator: Navigator) {
+        create<LoginRoute>(navigator, LoginScreenFactory())
+    }
+
+    private inline fun <reified T : Route> create(navigator: Navigator, factory: ScreenFactory<T>) {
+        builder.composable<T> { stackEntry ->
+            val data = stackEntry.toRoute<T>()
+            factory.create(navigator, data)
         }
     }
 }

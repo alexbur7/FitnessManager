@@ -9,9 +9,7 @@ internal class LoginViewModel : ViewModel() {
 
     private var phone = ""
     private val _viewState = MutableStateFlow<LoginViewState>(
-        LoginViewState.EnterNumber(
-            isEnableButton = false
-        )
+        LoginViewState.EnterNumber(isEnableButton = false)
     )
     val viewState: StateFlow<LoginViewState> = _viewState.asStateFlow()
 
@@ -26,8 +24,6 @@ internal class LoginViewModel : ViewModel() {
     }
 
     private fun setupState() {
-        _viewState.value = LoginViewState.EnterNumber(
-            isEnableButton = phone.isNotBlank()
-        )
+        _viewState.value = LoginViewState.EnterNumber(isEnableButton = phone.isNotBlank())
     }
 }

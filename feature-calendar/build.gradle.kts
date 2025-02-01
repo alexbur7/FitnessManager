@@ -46,7 +46,7 @@ kotlin {
 }
 
 android {
-    namespace = "ru.alexbur.fintess_manager.feature.login"
+    namespace = "ru.alexbur.fintess_manager.feature.calendar"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

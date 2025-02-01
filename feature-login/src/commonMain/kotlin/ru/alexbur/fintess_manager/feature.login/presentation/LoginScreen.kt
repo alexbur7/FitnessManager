@@ -12,14 +12,21 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 import ru.alexbur.fintess_manager.feature.login.presentation.phone.PhoneNumber
 import ru.alexbur.fintess_manager.navigation.Navigator
+import ru.alexbur.fintess_manager.navigation.Route
 
 @Composable
 internal fun LoginScreen(
     navigator: Navigator,
+    mainScreenRoute: Route,
     viewModel: LoginViewModel = koinViewModel(),
 ) {
     val viewState = viewModel.viewState.collectAsStateWithLifecycle()
-    val onClick = remember { { viewModel.obtainAction(LoginAction.LoginClicked()) } }
+    val onClick = remember {
+        /* {
+            viewModel.obtainAction(LoginAction.LoginClicked())
+        } */
+        { navigator.navigateTo(mainScreenRoute) }
+    }
     val numberEntered = remember {
         { data: String -> viewModel.obtainAction(LoginAction.NumberEntered(data)) }
     }

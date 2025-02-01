@@ -5,20 +5,21 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import ru.alexbur.fintess_manager.feature.login.presentation.navigation.LoginRoute
 
 @Composable
 fun App() {
     MaterialTheme {
         Scaffold(modifier = Modifier.fillMaxWidth()) {
-            val navController: NavHostController = rememberNavController()
+            val navController = rememberNavController()
+            val navigator = rememberNavigator(navController)
             NavHost(
                 navController = navController,
-                startDestination = "login"
+                startDestination = LoginRoute
             ) {
-                AppComposeScreenFactory(this).create(navController)
+                AppComposeScreenFactory(this).create(navigator)
             }
         }
     }

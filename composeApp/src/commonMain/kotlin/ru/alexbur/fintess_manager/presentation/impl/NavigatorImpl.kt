@@ -1,4 +1,4 @@
-package ru.alexbur.fintess_manager.navigation.impl
+package ru.alexbur.fintess_manager.presentation.impl
 
 import androidx.navigation.NavController
 import ru.alexbur.fintess_manager.navigation.Navigator

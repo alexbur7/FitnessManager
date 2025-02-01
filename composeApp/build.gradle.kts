@@ -63,6 +63,7 @@ kotlin {
             implementation(project(":core"))
             implementation(project(":navigation"))
             implementation(project(":feature-login"))
+            implementation(project(":feature-calendar"))
         }
 
         iosMain.dependencies {

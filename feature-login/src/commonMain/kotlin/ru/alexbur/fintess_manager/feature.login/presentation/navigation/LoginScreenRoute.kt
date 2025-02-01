@@ -11,11 +11,13 @@ import ru.alexbur.fintess_manager.navigation.ScreenFactory
 @Serializable
 data object LoginRoute : Route
 
-class LoginScreenFactory : ScreenFactory<LoginRoute> {
+class LoginScreenFactory(
+    private val mainScreenRoute: Route
+) : ScreenFactory<LoginRoute> {
 
     @NonRestartableComposable
     @Composable
     override fun create(navigator: Navigator, route: LoginRoute) {
-        LoginScreen(navigator)
+        LoginScreen(navigator, mainScreenRoute)
     }
 }

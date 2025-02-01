@@ -1,18 +1,14 @@
 package ru.alexbur.fintess_manager.feature.login.presentation
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import org.koin.compose.viewmodel.koinViewModel
+import ru.alexbur.fintess_manager.feature.login.presentation.phone.PhoneNumber
 
 class LoginScreenFactory {
 
@@ -47,13 +43,7 @@ private fun LoginScreen(
         Text(
             text = "Введи номер телефона",
         )
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = viewState.phone,
-            onValueChange = { newValue: String ->
-                numberEntered(newValue)
-            },
-        )
+        PhoneNumber(numberEntered)
         Button(
             onClick = onClick,
             enabled = viewState.isEnableButton,

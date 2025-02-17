@@ -3,6 +3,7 @@ package ru.alexbur.fintess_manager.feature.login.presentation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import kotlinx.serialization.Serializable
+import ru.alexbur.fintess_manager.common_presentation.snackbar.LocalSnackbar
 import ru.alexbur.fintess_manager.feature.login.presentation.LoginScreen
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.navigation.Route
@@ -18,6 +19,6 @@ class LoginScreenFactory(
     @NonRestartableComposable
     @Composable
     override fun create(navigator: Navigator, route: LoginRoute) {
-        LoginScreen(navigator, mainScreenRoute)
+        LoginScreen(navigator, mainScreenRoute, LocalSnackbar.current)
     }
 }

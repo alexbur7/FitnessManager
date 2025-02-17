@@ -4,7 +4,7 @@ import ru.alexbur.fintess_manager.navigation.Route
 
 abstract class ViewEvent
 
-class Navigation(val route: Route) : ViewEvent()
+class Navigation(val route: Route, val clearRoute: Route? = null) : ViewEvent()
 
 class ShowSnackBar(val settings: Settings) : ViewEvent() {
     constructor(message: String) : this(Settings(message))

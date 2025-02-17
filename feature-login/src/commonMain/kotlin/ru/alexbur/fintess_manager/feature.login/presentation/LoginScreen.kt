@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.ParametersHolder
 import ru.alexbur.fintess_manager.common_presentation.mvi.Navigation
+import ru.alexbur.fintess_manager.common_presentation.mvi.ShowSnackBar
 import ru.alexbur.fintess_manager.feature.login.presentation.phone.PhoneNumber
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.navigation.Route
@@ -28,6 +29,7 @@ import ru.alexbur.fintess_manager.navigation.Route
 internal fun LoginScreen(
     navigator: Navigator,
     mainScreenRoute: Route,
+    showSnackBar: (ShowSnackBar.Settings) -> Unit,
     viewModel: LoginViewModel = koinViewModel { ParametersHolder(mutableListOf(mainScreenRoute)) },
 ) {
     val viewState = viewModel.viewState.collectAsStateWithLifecycle()
@@ -37,6 +39,8 @@ internal fun LoginScreen(
                 is Navigation -> {
                     navigator.navigateTo(event.route)
                 }
+
+                is ShowSnackBar -> showSnackBar(event.settings)
             }
         }
     }

@@ -17,6 +17,6 @@ internal class LoginRepositoryMock : LoginRepository {
         otp: String
     ): Login {
         delay(200L)
-        return Login(token = "fknwkpqfnqwpif")
+        return Login(accessToken = "fknwkpqfnqwpif", refreshToken = "khjrpqjwi")
     }
 }

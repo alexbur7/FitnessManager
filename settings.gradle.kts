@@ -31,6 +31,7 @@ include(
     ":composeApp",
     
     ":core",
+    ":network",
     ":navigation",
     ":common-presentation",
 

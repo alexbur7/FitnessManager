@@ -43,6 +43,7 @@ kotlin {
 
             implementation(project(":core"))
             implementation(project(":navigation"))
+            implementation(project(":network"))
             implementation(project(":common-presentation"))
         }
     }

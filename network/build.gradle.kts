@@ -7,8 +7,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinSerilization)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -26,25 +24,22 @@ kotlin {
 
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-
             implementation(libs.koin.core)
+            implementation(libs.kotlinx.serialization.core)
 
-            implementation(libs.multiplatform.settings)
-            implementation(libs.multiplatform.settings.no.arg)
+            // Network
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.logging)
 
             implementation(project(":core"))
-            implementation(project(":navigation"))
-            implementation(project(":network"))
         }
     }
 }
 
 android {
-    namespace = "ru.alexbur.fintess_manager.common_presentation"
+    namespace = "ru.alexbur.fintess_manager.network"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

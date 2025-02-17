@@ -8,14 +8,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.alexbur.fintess_manager.common_presentation.EventFlow
 import ru.alexbur.fintess_manager.common_presentation.MutableEventFlow
+import ru.alexbur.fintess_manager.common_presentation.error_handler.FitnessManagerErrorHandler
 import ru.alexbur.fintess_manager.common_presentation.mvi.Navigation
-import ru.alexbur.fintess_manager.core.AppLogger
 import ru.alexbur.fintess_manager.feature.login.domain.interactor.LoginInteractor
+import ru.alexbur.fintess_manager.feature.login.presentation.navigation.LoginRoute
 import ru.alexbur.fintess_manager.navigation.Route
 
 internal class LoginViewModel(
     private val mainRoute: Route,
-    private val interactor: LoginInteractor
+    private val interactor: LoginInteractor,
+    private val errorHandler: FitnessManagerErrorHandler
 ) : ViewModel() {
 
     private var phone = ""
@@ -55,7 +57,7 @@ internal class LoginViewModel(
                 otp = ""
                 setupEnterOtpState()
             }.onFailure {
-                AppLogger.e("tut_otp", "Error: $it")
+                _viewEvent.send(errorHandler.handleError(it))
             }
         }
     }
@@ -64,9 +66,9 @@ internal class LoginViewModel(
         if (otp.length != 6) return
         viewModelScope.launch {
             interactor.login(userId, otp).onSuccess {
-                _viewEvent.send(Navigation(mainRoute))
+                _viewEvent.send(Navigation(mainRoute, LoginRoute))
             }.onFailure {
-                AppLogger.e("tut_login", "Error: $it")
+                _viewEvent.send(errorHandler.handleError(it))
             }
         }
     }

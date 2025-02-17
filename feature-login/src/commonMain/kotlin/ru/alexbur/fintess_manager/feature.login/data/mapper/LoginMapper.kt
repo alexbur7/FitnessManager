@@ -12,6 +12,7 @@ internal class LoginMapper {
     )
 
     fun map(response: LoginResponse) = Login(
-        token = response.token,
+        accessToken = response.accessToken,
+        refreshToken = response.refreshToken,
     )
 }

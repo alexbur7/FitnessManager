@@ -40,12 +40,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import ru.alexbur.fintess_manager.feature.calendar.presentation.CalendarRoute
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.presentation.factory.CalendarComposeScreenFactory
 import ru.alexbur.fintess_manager.presentation.rememberNavigator
 import ru.alexbur.fintess_manager.uikit.AppColors
-
-private const val TAB_CONTENT_ROUTE = "tab_content"
+import kotlin.reflect.KClass
 
 @Composable
 internal fun MainScreen(
@@ -69,18 +69,21 @@ internal fun MainScreen(
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
-            TabContent(isVisible = currentTab == BottomNavTab.Schedule) {
+            TabContent(
+                isVisible = currentTab == BottomNavTab.Schedule,
+                startDestination = CalendarRoute::class
+            ) {
                 CalendarComposeScreenFactory(this).create(it)
             }
-            TabContent(isVisible = currentTab == BottomNavTab.Clients) {
-                TODO()
+            /* TabContent(isVisible = currentTab == BottomNavTab.Clients) {
+
             }
             TabContent(isVisible = currentTab == BottomNavTab.Workouts) {
-                TODO()
+
             }
             TabContent(isVisible = currentTab == BottomNavTab.Profile) {
-                TODO()
-            }
+
+            }*/
         }
     }
 }
@@ -88,6 +91,7 @@ internal fun MainScreen(
 @Composable
 private fun TabContent(
     isVisible: Boolean,
+    startDestination: KClass<*>,
     modifier: Modifier = Modifier,
     builder: NavGraphBuilder.(Navigator) -> Unit
 ) {
@@ -115,7 +119,7 @@ private fun TabContent(
         val navigator = rememberNavigator(navController)
         NavHost(
             navController = navController,
-            startDestination = TAB_CONTENT_ROUTE,
+            startDestination = startDestination
         ) {
             builder(navigator)
         }

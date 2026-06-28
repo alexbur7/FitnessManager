@@ -12,11 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -61,6 +61,8 @@ internal fun CalendarScreen(
     CalendarScreenContent(
         state = state,
         onAction = viewModel::obtainAction,
+        onPreviousWeek = { viewModel.obtainAction(CalendarAction.PreviousWeek) },
+        onNextWeek = { viewModel.obtainAction(CalendarAction.NextWeek) },
     )
 }
 
@@ -70,6 +72,8 @@ internal fun CalendarScreen(
 private fun CalendarScreenContent(
     state: CalendarViewState,
     onAction: (CalendarAction) -> Unit,
+    onPreviousWeek: () -> Unit,
+    onNextWeek: () -> Unit,
 ) {
     BaseScreen(
         modifier = Modifier
@@ -86,10 +90,12 @@ private fun CalendarScreenContent(
             Spacer(modifier = Modifier.height(8.dp))
             TrainerBadge()
             Spacer(modifier = Modifier.height(24.dp))
-            WeekStrip(
+            WeekNavigation(
                 days = state.days,
                 selectedDayNumber = state.selectedDayNumber,
                 onDaySelected = { dayNumber -> onAction(CalendarAction.DaySelected(dayNumber)) },
+                onPreviousWeek = onPreviousWeek,
+                onNextWeek = onNextWeek,
             )
             Spacer(modifier = Modifier.height(24.dp))
             SectionHeader(title = state.sectionTitle)
@@ -132,13 +138,52 @@ private fun TrainerBadge() {
 }
 
 @Composable
+private fun WeekNavigation(
+    days: List<CalendarDay>,
+    selectedDayNumber: Int,
+    onDaySelected: (Int) -> Unit,
+    onPreviousWeek: () -> Unit,
+    onNextWeek: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(onClick = onPreviousWeek) {
+            Text(
+                text = "←",
+                color = AppColors.TextPrimary,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        WeekStrip(
+            days = days,
+            selectedDayNumber = selectedDayNumber,
+            onDaySelected = onDaySelected,
+            modifier = Modifier.weight(1f),
+        )
+        IconButton(onClick = onNextWeek) {
+            Text(
+                text = "→",
+                color = AppColors.TextPrimary,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+    }
+}
+
+@Composable
 private fun WeekStrip(
     days: List<CalendarDay>,
     selectedDayNumber: Int,
     onDaySelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         days.forEach { day ->

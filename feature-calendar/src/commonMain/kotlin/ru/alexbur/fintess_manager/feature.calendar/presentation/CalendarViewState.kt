@@ -16,6 +16,7 @@ internal data class CalendarViewState(
 internal data class CalendarDay(
     val name: String,
     val number: Int,
+    val isToday: Boolean = false,
 )
 
 @Immutable

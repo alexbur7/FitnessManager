@@ -29,7 +29,9 @@ dependencyResolutionManagement {
 }
 include(
     ":composeApp",
-    
+
+    ":uikit",
+
     ":core",
     ":network",
     ":navigation",

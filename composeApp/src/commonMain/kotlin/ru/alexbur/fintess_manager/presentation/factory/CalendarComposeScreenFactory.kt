@@ -1,4 +1,4 @@
-package ru.alexbur.fintess_manager.presentation
+package ru.alexbur.fintess_manager.presentation.factory
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -10,13 +10,14 @@ import ru.alexbur.fintess_manager.feature.login.presentation.navigation.LoginScr
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.navigation.Route
 import ru.alexbur.fintess_manager.navigation.ScreenFactory
+import ru.alexbur.fintess_manager.presentation.main.navigation.MainRoute
+import ru.alexbur.fintess_manager.presentation.main.navigation.MainScreenFactory
 
-class AppComposeScreenFactory(
+class CalendarComposeScreenFactory(
     private val builder: NavGraphBuilder,
 ) {
 
     fun create(navigator: Navigator) {
-        create<LoginRoute>(navigator, LoginScreenFactory(CalendarRoute))
         create<CalendarRoute>(navigator, CalendarScreenFactory())
     }
 

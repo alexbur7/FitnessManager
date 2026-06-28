@@ -34,27 +34,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 import ru.alexbur.fintess_manager.navigation.Navigator
-
-// ── Local color palette ────────────────────────────────────────────────────
-
-private val BgScreen = Color(0xFF0F0F14)
-private val BgDayCell = Color(0xFF1E1E2A)
-private val BgCard = Color(0xFF1A1A26)
-private val BgCardBorder = Color(0xFF2A2A3A)
-private val BgNavBar = Color(0xFF16161E)
-private val TextPrimary = Color(0xFFF0F0F8)
-private val TextSecondary = Color(0xFF9898B8)
-private val TextMuted = Color(0xFF5A5A78)
-private val ColorPurple = Color(0xFF6C63FF)
-private val ColorPurpleEnd = Color(0xFF8B5CF6)
-private val ColorGreen = Color(0xFF22D3A5)
+import ru.alexbur.fintess_manager.uikit.AppColors
 
 private val SelectedDayGradient = Brush.horizontalGradient(
-    colors = listOf(Color(0xFF6C63FF), Color(0xFF8B5CF6)),
+    colors = listOf(AppColors.Purple, AppColors.PurpleEnd),
 )
 
 private val FabGradient = Brush.horizontalGradient(
-    colors = listOf(Color(0xFF6C63FF), Color(0xFF8B5CF6)),
+    colors = listOf(AppColors.Purple, AppColors.PurpleEnd),
 )
 
 private val BottomNavLabels = listOf("Расписание", "Клиенты", "Тренировки", "Профиль")
@@ -87,7 +74,7 @@ private fun CalendarScreenContent(
     onAction: (CalendarAction) -> Unit,
 ) {
     Scaffold(
-        backgroundColor = BgScreen,
+        backgroundColor = AppColors.BgScreen,
         floatingActionButton = {
             AddFab(onClick = { onAction(CalendarAction.AddClicked()) })
         },
@@ -127,7 +114,7 @@ private fun CalendarScreenContent(
 private fun ScreenTitle() {
     Text(
         text = "Мои тренировки",
-        color = TextPrimary,
+        color = AppColors.TextPrimary,
         fontSize = 22.sp,
         fontWeight = FontWeight.Bold,
     )
@@ -138,14 +125,14 @@ private fun TrainerBadge() {
     Box(
         modifier = Modifier
             .background(
-                color = ColorPurple.copy(alpha = 0.13f),
+                color = AppColors.Purple.copy(alpha = 0.13f),
                 shape = RoundedCornerShape(9.dp),
             )
             .padding(horizontal = 10.dp, vertical = 4.dp),
     ) {
         Text(
             text = "Тренер",
-            color = ColorPurple,
+            color = AppColors.Purple,
             fontSize = 10.sp,
             fontWeight = FontWeight.Bold,
         )
@@ -188,7 +175,7 @@ private fun DayCell(
                 if (isSelected) {
                     Modifier.background(brush = SelectedDayGradient)
                 } else {
-                    Modifier.background(color = BgDayCell)
+                    Modifier.background(color = AppColors.BgDayCell)
                 },
             )
             .clickable(
@@ -203,13 +190,13 @@ private fun DayCell(
         ) {
             Text(
                 text = day.name,
-                color = if (isSelected) Color.White else TextMuted,
+                color = if (isSelected) Color.White else AppColors.TextMuted,
                 fontSize = 9.sp,
                 fontWeight = FontWeight.Bold,
             )
             Text(
                 text = day.number.toString(),
-                color = if (isSelected) Color.White else TextPrimary,
+                color = if (isSelected) Color.White else AppColors.TextPrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
             )
@@ -221,7 +208,7 @@ private fun DayCell(
 private fun SectionHeader(title: String) {
     Text(
         text = title,
-        color = TextPrimary,
+        color = AppColors.TextPrimary,
         fontSize = 14.sp,
         fontWeight = FontWeight.Bold,
     )
@@ -235,8 +222,8 @@ private fun WorkoutCard(workout: WorkoutItem) {
             .fillMaxWidth()
             .height(68.dp)
             .clip(shape)
-            .background(color = BgCard)
-            .border(width = 1.dp, color = BgCardBorder, shape = shape)
+            .background(color = AppColors.BgCard)
+            .border(width = 1.dp, color = AppColors.BgCardBorder, shape = shape)
             .padding(horizontal = 16.dp),
         contentAlignment = Alignment.CenterStart,
     ) {
@@ -248,14 +235,14 @@ private fun WorkoutCard(workout: WorkoutItem) {
             Column {
                 Text(
                     text = "${workout.time} — ${workout.duration}",
-                    color = TextPrimary,
+                    color = AppColors.TextPrimary,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "${workout.title} · ${workout.trainer}",
-                    color = TextSecondary,
+                    color = AppColors.TextSecondary,
                     fontSize = 12.sp,
                 )
             }
@@ -267,8 +254,8 @@ private fun WorkoutCard(workout: WorkoutItem) {
 @Composable
 private fun WorkoutStatusPill(status: WorkoutStatus) {
     val pillColor = when (status) {
-        WorkoutStatus.Active -> ColorGreen
-        WorkoutStatus.Soon -> ColorPurple
+        WorkoutStatus.Active -> AppColors.Green
+        WorkoutStatus.Soon -> AppColors.Purple
     }
     val pillText = when (status) {
         WorkoutStatus.Active -> "Активно"
@@ -318,9 +305,9 @@ private fun CalendarBottomNavBar() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = BgNavBar),
+            .background(color = AppColors.BgNavBar),
     ) {
-        Divider(color = BgCardBorder, thickness = 1.dp)
+        Divider(color = AppColors.BgCardBorder, thickness = 1.dp)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -352,13 +339,13 @@ private fun BottomNavItem(label: String, isActive: Boolean) {
                 .size(32.dp)
                 .clip(RoundedCornerShape(10.dp))
                 .background(
-                    color = if (isActive) ColorPurple.copy(alpha = 0.15f) else BgDayCell,
+                    color = if (isActive) AppColors.PurpleTabActive else AppColors.BgDayCell,
                 ),
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = label,
-            color = if (isActive) ColorPurple else TextMuted,
+            color = if (isActive) AppColors.Purple else AppColors.TextMuted,
             fontSize = 9.sp,
             fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
         )

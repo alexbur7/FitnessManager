@@ -42,6 +42,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.core)
             implementation(libs.lifecycle.viewmodel.compose)
 
+            implementation(project(":uikit"))
             implementation(project(":core"))
             implementation(project(":navigation"))
             implementation(project(":common-presentation"))

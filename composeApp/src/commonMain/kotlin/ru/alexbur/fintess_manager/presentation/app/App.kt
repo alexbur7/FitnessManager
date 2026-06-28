@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import ru.alexbur.fintess_manager.common_presentation.mvi.ShowSnackBar
 import ru.alexbur.fintess_manager.common_presentation.snackbar.LocalSnackbar
-import ru.alexbur.fintess_manager.presentation.AppComposeScreenFactory
+import ru.alexbur.fintess_manager.presentation.factory.AppComposeScreenFactory
 import ru.alexbur.fintess_manager.presentation.rememberNavigator
 
 @Composable

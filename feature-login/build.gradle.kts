@@ -41,6 +41,7 @@ kotlin {
 
             implementation(libs.ktor.client.core)
 
+            implementation(project(":uikit"))
             implementation(project(":core"))
             implementation(project(":navigation"))
             implementation(project(":network"))

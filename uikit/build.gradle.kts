@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinSerilization)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
@@ -23,30 +22,15 @@ kotlin {
     iosSimulatorArm64()
 
     sourceSets {
-
         commonMain.dependencies {
-            implementation(libs.kotlinx.coroutines.core)
             implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
             implementation(compose.ui)
-            implementation(compose.components.resources)
-
-            implementation(libs.koin.core)
-
-            implementation(libs.multiplatform.settings)
-            implementation(libs.multiplatform.settings.no.arg)
-
-            implementation(project(":uikit"))
-            implementation(project(":core"))
-            implementation(project(":navigation"))
-            implementation(project(":network"))
         }
     }
 }
 
 android {
-    namespace = "ru.alexbur.fintess_manager.common_presentation"
+    namespace = "ru.alexbur.fintess_manager.uikit"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

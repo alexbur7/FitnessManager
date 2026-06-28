@@ -43,8 +43,6 @@ internal class CalendarViewModel : ViewModel() {
     fun obtainAction(action: CalendarAction) {
         when (action) {
             is CalendarAction.DaySelected -> selectDay(action.dayNumber)
-            is CalendarAction.AddClicked -> Unit // no-op: future feature
-            is CalendarAction.BackClicked -> Unit // no-op: handled at screen level
         }
     }
 

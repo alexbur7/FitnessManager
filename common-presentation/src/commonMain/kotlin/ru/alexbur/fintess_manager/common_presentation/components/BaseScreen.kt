@@ -17,34 +17,32 @@ import ru.alexbur.fintess_manager.common_presentation.components.toolbar.Toolbar
 
 @Composable
 fun BaseScreen(
-    isLoading: Boolean,
-    toolbarState: ToolbarState,
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+    toolbarState: ToolbarState? = null,
     onBackClick: () -> Unit = {},
-    content: ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit = {},
 ) {
-    Box(modifier) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            TopAppBar(
-                title = { Text(toolbarState.title.getText()) },
-                navigationIcon = if (toolbarState.hasExit) {
-                    {
-                        IconButton(onClick = onBackClick) {
-                            Text(text = "←")
+    Box(modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            if (toolbarState != null) {
+                TopAppBar(
+                    title = { Text(toolbarState.title.getText()) },
+                    navigationIcon = if (toolbarState.hasExit) {
+                        {
+                            IconButton(onClick = onBackClick) {
+                                Text(text = "←")
+                            }
                         }
-                    }
-                } else {
-                    null
-                }
-            )
+                    } else {
+                        null
+                    },
+                )
+            }
             content()
         }
         if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-            )
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 }

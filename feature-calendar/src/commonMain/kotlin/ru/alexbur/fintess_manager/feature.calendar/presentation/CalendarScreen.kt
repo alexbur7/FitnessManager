@@ -17,8 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
+import ru.alexbur.fintess_manager.common_presentation.components.BaseScreen
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.uikit.AppColors
 
@@ -40,29 +39,17 @@ private val SelectedDayGradient = Brush.horizontalGradient(
     colors = listOf(AppColors.Purple, AppColors.PurpleEnd),
 )
 
-private val FabGradient = Brush.horizontalGradient(
-    colors = listOf(AppColors.Purple, AppColors.PurpleEnd),
-)
-
-private val BottomNavLabels = listOf("Расписание", "Клиенты", "Тренировки", "Профиль")
-
-// ── Entry point (navigator-aware) ─────────────────────────────────────────
+// ── Entry point ────────────────────────────────────────────────────────────
 
 @Composable
 internal fun CalendarScreen(
-    navigator: Navigator,
+    @Suppress("UNUSED_PARAMETER") navigator: Navigator,
     viewModel: CalendarViewModel = koinViewModel(),
 ) {
     val state by viewModel.viewState.collectAsStateWithLifecycle()
     CalendarScreenContent(
         state = state,
-        onAction = { action ->
-            when (action) {
-                is CalendarAction.BackClicked -> navigator.popBackStack()
-                is CalendarAction.AddClicked,
-                is CalendarAction.DaySelected -> viewModel.obtainAction(action)
-            }
-        },
+        onAction = viewModel::obtainAction,
     )
 }
 
@@ -73,18 +60,13 @@ private fun CalendarScreenContent(
     state: CalendarViewState,
     onAction: (CalendarAction) -> Unit,
 ) {
-    Scaffold(
-        backgroundColor = AppColors.BgScreen,
-        floatingActionButton = {
-            AddFab(onClick = { onAction(CalendarAction.AddClicked()) })
-        },
-        bottomBar = { CalendarBottomNavBar() },
-    ) { paddingValues ->
+    BaseScreen(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppColors.BgScreen)
+    ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 20.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
             Spacer(modifier = Modifier.height(24.dp))
@@ -107,8 +89,6 @@ private fun CalendarScreenContent(
         }
     }
 }
-
-// ── Sub-composables ────────────────────────────────────────────────────────
 
 @Composable
 private fun ScreenTitle() {
@@ -277,77 +257,3 @@ private fun WorkoutStatusPill(status: WorkoutStatus) {
     }
 }
 
-@Composable
-private fun AddFab(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(52.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(brush = FabGradient)
-            .clickable(
-                role = Role.Button,
-                onClickLabel = "Добавить тренировку",
-                onClick = onClick,
-            ),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = "+",
-            color = Color.White,
-            fontSize = 26.sp,
-            fontWeight = FontWeight.Bold,
-        )
-    }
-}
-
-@Composable
-private fun CalendarBottomNavBar() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = AppColors.BgNavBar),
-    ) {
-        Divider(color = AppColors.BgCardBorder, thickness = 1.dp)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            BottomNavLabels.forEachIndexed { index, label ->
-                BottomNavItem(
-                    label = label,
-                    isActive = index == 0,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun BottomNavItem(label: String, isActive: Boolean) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable(
-            role = Role.Tab,
-            // no-op: bottom nav items are display-only in this mock
-            onClick = {},
-        ),
-    ) {
-        Box(
-            modifier = Modifier
-                .size(32.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .background(
-                    color = if (isActive) AppColors.PurpleTabActive else AppColors.BgDayCell,
-                ),
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = label,
-            color = if (isActive) AppColors.Purple else AppColors.TextMuted,
-            fontSize = 9.sp,
-            fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
-        )
-    }
-}

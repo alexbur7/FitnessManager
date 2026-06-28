@@ -63,6 +63,10 @@ internal class CalendarViewModel(
             is CalendarAction.DaySelected -> selectDay(action.dayNumber)
             CalendarAction.NextWeek -> shiftWeek(offset = 1)
             CalendarAction.PreviousWeek -> shiftWeek(offset = -1)
+            CalendarAction.Retry -> {
+                _viewState.value = _viewState.value.copy(isLoading = true, isError = false)
+                loadAppointments()
+            }
         }
     }
 
@@ -77,6 +81,7 @@ internal class CalendarViewModel(
             workouts = emptyList(),
             sectionTitle = "",
             isLoading = true,
+            isError = false,
         )
         loadAppointments()
     }
@@ -90,7 +95,7 @@ internal class CalendarViewModel(
                     allAppointments = appointments
                     updateStateForDay(_viewState.value.selectedDayNumber)
                 }.onFailure { error ->
-                    _viewState.value = _viewState.value.copy(isLoading = false)
+                    _viewState.value = _viewState.value.copy(isLoading = false, isError = true)
                     _viewEvent.send(errorHandler.handleError(error))
                 }
         }

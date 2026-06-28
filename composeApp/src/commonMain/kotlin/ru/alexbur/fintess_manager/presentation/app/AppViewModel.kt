@@ -10,5 +10,6 @@ internal class AppViewModel(
     private val preferenceMediator: PreferenceMediator,
 ) : ViewModel() {
 
-    val startDestination: Route get() = if (preferenceMediator.accessToken.isNotEmpty()) MainRoute else LoginRoute
+    // val startDestination: Route get() = if (preferenceMediator.accessToken.isNotEmpty()) MainRoute else LoginRoute
+    val startDestination: Route get() = MainRoute
 }

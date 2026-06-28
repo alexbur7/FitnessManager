@@ -10,6 +10,7 @@ internal data class CalendarViewState(
     val sectionTitle: String,
     val workouts: List<WorkoutItem>,
     val isLoading: Boolean = false,
+    val isError: Boolean = false,
 ) : ViewState
 
 @Immutable

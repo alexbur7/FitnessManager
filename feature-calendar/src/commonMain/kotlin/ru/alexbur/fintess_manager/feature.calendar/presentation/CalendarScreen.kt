@@ -33,6 +33,7 @@ internal fun CalendarScreen(
         onAction = viewModel::obtainAction,
         onPreviousWeek = { viewModel.obtainAction(CalendarAction.PreviousWeek) },
         onNextWeek = { viewModel.obtainAction(CalendarAction.NextWeek) },
+        onRetry = { viewModel.obtainAction(CalendarAction.Retry) },
     )
 }
 

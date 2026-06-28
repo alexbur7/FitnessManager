@@ -9,6 +9,7 @@ internal data class CalendarViewState(
     val selectedDayNumber: Int,
     val sectionTitle: String,
     val workouts: List<WorkoutItem>,
+    val isLoading: Boolean = false,
 ) : ViewState
 
 @Immutable

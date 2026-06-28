@@ -41,7 +41,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ru.alexbur.fintess_manager.navigation.Navigator
-import ru.alexbur.fintess_manager.presentation.factory.AppComposeScreenFactory
 import ru.alexbur.fintess_manager.presentation.factory.CalendarComposeScreenFactory
 import ru.alexbur.fintess_manager.presentation.rememberNavigator
 import ru.alexbur.fintess_manager.uikit.AppColors
@@ -50,6 +49,7 @@ private const val TAB_CONTENT_ROUTE = "tab_content"
 
 @Composable
 internal fun MainScreen(
+    navigator: Navigator,
     modifier: Modifier = Modifier,
 ) {
     var currentTab by remember { mutableStateOf(BottomNavTab.Schedule) }

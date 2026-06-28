@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 import ru.alexbur.fintess_manager.common_presentation.components.BaseScreen
+import ru.alexbur.fintess_manager.common_presentation.mvi.ShowSnackBar
+import ru.alexbur.fintess_manager.common_presentation.snackbar.LocalSnackbar
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.uikit.AppColors
 
@@ -47,6 +50,14 @@ internal fun CalendarScreen(
     viewModel: CalendarViewModel = koinViewModel(),
 ) {
     val state by viewModel.viewState.collectAsStateWithLifecycle()
+    val showSnackbar = LocalSnackbar.current
+    LaunchedEffect(Unit) {
+        viewModel.viewEvent.collect { event ->
+            when (event) {
+                is ShowSnackBar -> showSnackbar(event.settings)
+            }
+        }
+    }
     CalendarScreenContent(
         state = state,
         onAction = viewModel::obtainAction,
@@ -63,7 +74,8 @@ private fun CalendarScreenContent(
     BaseScreen(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppColors.BgScreen)
+            .background(AppColors.BgScreen),
+        isLoading = state.isLoading,
     ) {
         Column(
             modifier = Modifier

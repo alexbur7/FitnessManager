@@ -40,6 +40,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.core)
+            implementation(libs.ktor.client.core)
             implementation(libs.lifecycle.viewmodel.compose)
 
             implementation(project(":uikit"))

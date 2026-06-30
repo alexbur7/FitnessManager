@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ClientResponse(
-    @SerialName("id")
-    val id: String,
+    @SerialName("relationships_id")
+    val relationshipsId: String,
     @SerialName("first_name")
     val firstName: String,
     @SerialName("last_name")

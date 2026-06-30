@@ -67,6 +67,7 @@ kotlin {
             implementation(project(":common-presentation"))
             implementation(project(":feature-login"))
             implementation(project(":feature-calendar"))
+            implementation(project(":feature-clients"))
         }
 
         iosMain.dependencies {

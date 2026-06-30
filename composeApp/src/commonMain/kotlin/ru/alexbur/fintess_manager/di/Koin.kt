@@ -5,6 +5,7 @@ import org.koin.dsl.KoinAppDeclaration
 import ru.alexbur.fintess_manager.common_presentation.di.presentationModule
 import ru.alexbur.fintess_manager.core.di.baseModule
 import ru.alexbur.fintess_manager.feature.calendar.di.calendarModule
+import ru.alexbur.fintess_manager.feature.clients.di.clientsModule
 import ru.alexbur.fintess_manager.feature.login.di.loginModule
 import ru.alexbur.fintess_manager.network.di.apiModule
 
@@ -13,6 +14,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     modules(
         loginModule,
         calendarModule,
+        clientsModule,
         appModule,
     )
     appDeclaration()

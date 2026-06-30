@@ -41,8 +41,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ru.alexbur.fintess_manager.feature.calendar.presentation.CalendarRoute
+import ru.alexbur.fintess_manager.feature.clients.presentation.ClientsRoute
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.presentation.factory.CalendarComposeScreenFactory
+import ru.alexbur.fintess_manager.presentation.factory.ClientsComposeScreenFactory
 import ru.alexbur.fintess_manager.presentation.rememberNavigator
 import ru.alexbur.fintess_manager.uikit.AppColors
 import kotlin.reflect.KClass
@@ -75,10 +77,13 @@ internal fun MainScreen(
             ) {
                 CalendarComposeScreenFactory(this).create(it)
             }
-            /* TabContent(isVisible = currentTab == BottomNavTab.Clients) {
-
+            TabContent(
+                isVisible = currentTab == BottomNavTab.Clients,
+                startDestination = ClientsRoute::class,
+            ) {
+                ClientsComposeScreenFactory(this).create(it)
             }
-            TabContent(isVisible = currentTab == BottomNavTab.Workouts) {
+            /*TabContent(isVisible = currentTab == BottomNavTab.Workouts) {
 
             }
             TabContent(isVisible = currentTab == BottomNavTab.Profile) {

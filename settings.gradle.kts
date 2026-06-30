@@ -39,4 +39,5 @@ include(
 
     ":feature-login",
     ":feature-calendar",
+    ":feature-clients",
 )

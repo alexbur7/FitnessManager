@@ -12,6 +12,7 @@ import ru.alexbur.fintess_manager.common_presentation.MutableEventFlow
 import ru.alexbur.fintess_manager.common_presentation.error_handler.FitnessManagerErrorHandler
 import ru.alexbur.fintess_manager.feature.clients.domain.interactor.ClientsInteractor
 import ru.alexbur.fintess_manager.feature.clients.domain.models.Client
+import ru.alexbur.fintess_manager.feature.clients.domain.models.ClientsPage
 
 internal class ClientsViewModel(
     private val interactor: ClientsInteractor,
@@ -51,22 +52,22 @@ internal class ClientsViewModel(
                 else it.copy(isLoading = true)
             }
             interactor.getClients(limit = limit, offset = offset)
-                .onSuccess { (clients, total) ->
-                    hasMorePages = clients.size == limit
+                .onSuccess { page: ClientsPage ->
+                    hasMorePages = page.clients.size == limit
                     val startIndex = if (isNextPage) _viewState.value.clients.size else 0
-                    val newItems = clients.mapIndexed { i, client ->
+                    val newItems = page.clients.mapIndexed { i, client ->
                         client.toClientItem(index = startIndex + i)
                     }
                     _viewState.update { state ->
                         state.copy(
                             clients = if (isNextPage) state.clients + newItems else newItems,
-                            clientCount = total,
+                            clientCount = page.total,
                             isLoading = false,
                             isLoadingNextPage = false,
                         )
                     }
                 }
-                .onFailure { error ->
+                .onFailure { error: Throwable ->
                     if (isNextPage) offset -= limit
                     _viewState.update { it.copy(isLoading = false, isLoadingNextPage = false) }
                     _viewEvent.send(errorHandler.handleError(error))
@@ -75,7 +76,7 @@ internal class ClientsViewModel(
     }
 
     private fun Client.toClientItem(index: Int) = ClientItem(
-        id = id,
+        id = relationshipsId,
         initials = name.split(" ").take(2).mapNotNull { it.firstOrNull()?.uppercaseChar() }.joinToString(""),
         name = name,
         subtitle = buildSubtitle(count = remainingWorkouts, status = workoutsStatus),

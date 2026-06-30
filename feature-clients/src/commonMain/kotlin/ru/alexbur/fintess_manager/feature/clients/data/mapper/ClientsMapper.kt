@@ -5,7 +5,7 @@ import ru.alexbur.fintess_manager.feature.clients.domain.models.Client
 
 internal class ClientsMapper {
     fun map(dto: ClientResponse) = Client(
-        id = dto.id,
+        relationshipsId = dto.relationshipsId,
         name = "${dto.firstName} ${dto.lastName}",
         remainingWorkouts = dto.remainingWorkouts,
         workoutsStatus = dto.workoutsStatus,

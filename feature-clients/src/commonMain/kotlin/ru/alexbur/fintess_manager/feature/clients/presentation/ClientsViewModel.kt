@@ -39,6 +39,13 @@ internal class ClientsViewModel(
         loadClients()
     }
 
+    fun retry() {
+        offset = 0
+        hasMorePages = true
+        _viewState.update { it.copy(isLoading = true, isError = false) }
+        loadClients()
+    }
+
     fun loadNextPage() {
         if (!hasMorePages || _viewState.value.isLoadingNextPage || _viewState.value.isLoading) return
         offset += limit
@@ -68,9 +75,13 @@ internal class ClientsViewModel(
                     }
                 }
                 .onFailure { error: Throwable ->
-                    if (isNextPage) offset -= limit
-                    _viewState.update { it.copy(isLoading = false, isLoadingNextPage = false) }
-                    _viewEvent.send(errorHandler.handleError(error))
+                    if (isNextPage) {
+                        offset -= limit
+                        _viewState.update { it.copy(isLoadingNextPage = false) }
+                        _viewEvent.send(errorHandler.handleError(error))
+                    } else {
+                        _viewState.update { it.copy(isLoading = false, isError = true) }
+                    }
                 }
         }
     }

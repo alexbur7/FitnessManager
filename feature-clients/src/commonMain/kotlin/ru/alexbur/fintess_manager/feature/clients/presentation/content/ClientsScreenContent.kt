@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,6 +39,7 @@ import ru.alexbur.fintess_manager.uikit.AppColors
 internal fun ClientsScreenContent(
     state: ClientsViewState,
     onLoadNextPage: () -> Unit,
+    onRetry: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -50,11 +52,28 @@ internal fun ClientsScreenContent(
         Spacer(modifier = Modifier.height(16.dp))
         SearchBar()
         Spacer(modifier = Modifier.height(16.dp))
-        ClientsCard(
-            clients = state.clients,
-            onLoadNextPage = onLoadNextPage,
-            modifier = Modifier.weight(1f),
-        )
+        if (state.isError) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "Произошла ошибка", color = AppColors.TextPrimary)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(onClick = onRetry) {
+                        Text(text = "Повторить")
+                    }
+                }
+            }
+        } else {
+            ClientsCard(
+                clients = state.clients,
+                onLoadNextPage = onLoadNextPage,
+                modifier = Modifier.weight(1f),
+            )
+        }
         Spacer(modifier = Modifier.height(24.dp))
     }
 }

@@ -31,6 +31,7 @@ internal fun ClientsScreen(
     ClientsScreenContent(
         state = state,
         onLoadNextPage = viewModel::loadNextPage,
+        onRetry = viewModel::retry,
     )
 }
 

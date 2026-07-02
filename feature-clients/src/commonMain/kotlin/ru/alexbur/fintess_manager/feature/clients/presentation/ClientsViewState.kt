@@ -9,6 +9,7 @@ internal data class ClientsViewState(
     val clientCount: Int,
     val isLoading: Boolean = false,
     val isLoadingNextPage: Boolean = false,
+    val isError: Boolean = false,
 ) : ViewState
 
 @Immutable

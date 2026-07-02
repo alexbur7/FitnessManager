@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
@@ -104,6 +105,7 @@ private fun TabContent(
     Box(
         modifier = modifier
             .fillMaxSize()
+            .zIndex(if (isVisible) 1f else 0f)
             .alpha(if (isVisible) 1f else 0f)
             .then(
                 if (!isVisible) {

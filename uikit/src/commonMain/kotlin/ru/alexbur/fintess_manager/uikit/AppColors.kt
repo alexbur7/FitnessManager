@@ -18,4 +18,9 @@ object AppColors {
     val PurpleTabActive = Color(0xFF6C63FF).copy(alpha = 0.15f)
 
     val Green = Color(0xFF22D3A5)
+
+    // "ОСТАЛОСЬ ТРЕНИРОВОК" card gradient (feature-clients, ClientTrainingsScreenContent) — same
+    // values already used un-centralized for AvatarGradient.RedOrange in ClientsScreenContent.kt.
+    val GradientRedOrangeStart = Color(0xFFFF5C7A)
+    val GradientRedOrangeEnd = Color(0xFFFF8C42)
 }

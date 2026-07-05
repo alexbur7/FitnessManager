@@ -39,6 +39,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.core)
             implementation(libs.ktor.client.core)
             implementation(libs.lifecycle.viewmodel.compose)
@@ -47,6 +48,10 @@ kotlin {
             implementation(project(":uikit"))
             implementation(project(":navigation"))
             implementation(project(":common-presentation"))
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }

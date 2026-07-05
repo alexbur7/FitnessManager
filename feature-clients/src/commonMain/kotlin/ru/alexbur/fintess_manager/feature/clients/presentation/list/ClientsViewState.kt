@@ -1,4 +1,4 @@
-package ru.alexbur.fintess_manager.feature.clients.presentation
+package ru.alexbur.fintess_manager.feature.clients.presentation.list
 
 import androidx.compose.runtime.Immutable
 import ru.alexbur.fintess_manager.common_presentation.mvi.ViewState
@@ -21,7 +21,9 @@ internal data class ClientItem(
     val avatarGradient: AvatarGradient,
 )
 
-internal enum class AvatarGradient {
+// Public (not internal): referenced by the public ClientTrainingsRoute (ClientTrainingsScreen.kt),
+// which composeApp needs to construct — a public Route cannot expose an internal-typed property.
+enum class AvatarGradient {
     Purple,
     RedOrange,
     GreenBlue,

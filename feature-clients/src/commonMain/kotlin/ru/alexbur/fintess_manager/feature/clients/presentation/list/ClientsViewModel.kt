@@ -1,4 +1,4 @@
-package ru.alexbur.fintess_manager.feature.clients.presentation
+package ru.alexbur.fintess_manager.feature.clients.presentation.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,9 +10,11 @@ import kotlinx.coroutines.launch
 import ru.alexbur.fintess_manager.common_presentation.EventFlow
 import ru.alexbur.fintess_manager.common_presentation.MutableEventFlow
 import ru.alexbur.fintess_manager.common_presentation.error_handler.FitnessManagerErrorHandler
+import ru.alexbur.fintess_manager.common_presentation.mvi.Navigation
 import ru.alexbur.fintess_manager.feature.clients.domain.interactor.ClientsInteractor
 import ru.alexbur.fintess_manager.feature.clients.domain.models.Client
 import ru.alexbur.fintess_manager.feature.clients.domain.models.ClientsPage
+import ru.alexbur.fintess_manager.feature.clients.presentation.detail.ClientTrainingsRoute
 
 internal class ClientsViewModel(
     private val interactor: ClientsInteractor,
@@ -50,6 +52,21 @@ internal class ClientsViewModel(
         if (!hasMorePages || _viewState.value.isLoadingNextPage || _viewState.value.isLoading) return
         offset += limit
         loadClients(isNextPage = true)
+    }
+
+    fun onClientClicked(client: ClientItem) {
+        viewModelScope.launch {
+            _viewEvent.send(
+                Navigation(
+                    ClientTrainingsRoute(
+                        clientId = client.id,
+                        initialName = client.name,
+                        initialInitials = client.initials,
+                        initialAvatarGradient = client.avatarGradient,
+                    ),
+                ),
+            )
+        }
     }
 
     private fun loadClients(isNextPage: Boolean = false) {

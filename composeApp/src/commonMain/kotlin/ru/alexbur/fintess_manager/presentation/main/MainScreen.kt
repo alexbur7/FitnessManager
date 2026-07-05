@@ -42,7 +42,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ru.alexbur.fintess_manager.feature.calendar.presentation.CalendarRoute
-import ru.alexbur.fintess_manager.feature.clients.presentation.ClientsRoute
+import ru.alexbur.fintess_manager.feature.clients.presentation.list.ClientsRoute
 import ru.alexbur.fintess_manager.navigation.Navigator
 import ru.alexbur.fintess_manager.presentation.factory.CalendarComposeScreenFactory
 import ru.alexbur.fintess_manager.presentation.factory.ClientsComposeScreenFactory

@@ -1,7 +1,8 @@
-package ru.alexbur.fintess_manager.feature.clients.presentation.content
+package ru.alexbur.fintess_manager.feature.clients.presentation.list.content
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,12 +28,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.alexbur.fintess_manager.feature.clients.presentation.AvatarGradient
-import ru.alexbur.fintess_manager.feature.clients.presentation.ClientItem
-import ru.alexbur.fintess_manager.feature.clients.presentation.ClientsViewState
+import ru.alexbur.fintess_manager.feature.clients.presentation.list.AvatarGradient
+import ru.alexbur.fintess_manager.feature.clients.presentation.list.ClientItem
+import ru.alexbur.fintess_manager.feature.clients.presentation.list.ClientsViewState
 import ru.alexbur.fintess_manager.uikit.AppColors
 
 @Composable
@@ -40,6 +44,7 @@ internal fun ClientsScreenContent(
     state: ClientsViewState,
     onLoadNextPage: () -> Unit,
     onRetry: () -> Unit,
+    onClientClick: (ClientItem) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -71,6 +76,7 @@ internal fun ClientsScreenContent(
             ClientsCard(
                 clients = state.clients,
                 onLoadNextPage = onLoadNextPage,
+                onClientClick = onClientClick,
                 modifier = Modifier.weight(1f),
             )
         }
@@ -151,6 +157,7 @@ private fun SearchBar() {
 private fun ClientsCard(
     clients: List<ClientItem>,
     onLoadNextPage: () -> Unit,
+    onClientClick: (ClientItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val listState = rememberLazyListState()
@@ -177,7 +184,7 @@ private fun ClientsCard(
             .padding(horizontal = 16.dp),
     ) {
         itemsIndexed(clients, key = { _, client -> client.id }) { index, client ->
-            ClientRow(client = client)
+            ClientRow(client = client, onClick = { onClientClick(client) })
             if (index < clients.lastIndex) {
                 Box(
                     modifier = Modifier
@@ -191,10 +198,12 @@ private fun ClientsCard(
 }
 
 @Composable
-private fun ClientRow(client: ClientItem) {
+private fun ClientRow(client: ClientItem, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(role = Role.Button, onClick = onClick)
+            .semantics { contentDescription = "Клиент ${client.name}" }
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
